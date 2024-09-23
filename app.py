@@ -13,9 +13,11 @@ with open('config.yaml', 'r', encoding='utf-8') as f:
     config = yaml.safe_load(f)
 
 API_BEARER_TOKEN = config.get('api_bearer_token')
+MODEL_PROVIDER_API_KEY = config.get('model_provider_api_key')
 DEFAULT_API_URL = config.get('default_api_url')
 DEFAULT_MODEL = config.get('default_model')
 STREAM_STATUS_FEEDBACK = config.get('stream_status_feedback', True)
+USE_REGEX_PROCESSING = config.get('use_regex_processing', True)
 
 def verify_token(token):
     return token == API_BEARER_TOKEN
@@ -32,7 +34,7 @@ def make_api_call(messages, max_tokens, is_final_answer=False):
             }
             headers = {
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {API_BEARER_TOKEN}"
+                "Authorization": f"Bearer {MODEL_PROVIDER_API_KEY}"
             }
             response = requests.post(DEFAULT_API_URL, headers=headers, json=data)
             response.raise_for_status()
@@ -114,14 +116,25 @@ def chat_completions():
         def generate():
             yield 'data: {"choices":[{"delta":{"content":" "},"index":0}]}\n\n'
             
+            sent_steps = set()  # 用于跟踪已发送的步骤
+            
             for steps, total_thinking_time in generate_response(messages[-1]['content']):
                 for i, (title, content, thinking_time) in enumerate(steps):
-                    if title.startswith("Final Answer"):
-                        yield f'data: {{"choices":[{{"delta":{{"content":"### {title}\\n{content.replace("\\n", "<br>")}"}},"index":0}}]}}\n\n'
-                    else:
-                        yield f'data: {{"choices":[{{"delta":{{"content":"<details open>\\n<summary>{title}</summary>\\n{content.replace("\\n", "<br>")}\\n</details>"}},"index":0}}]}}\n\n'
+                    step_key = f"{title}:{content[:50]}"  # 使用标题和内容的前50个字符作为唯一标识
+                    if step_key not in sent_steps:
+                        sent_steps.add(step_key)
+                        if USE_REGEX_PROCESSING:
+                            if title.startswith("Final Answer"):
+                                yield f'data: {{"choices":[{{"delta":{{"content":"\\n\\n### {title}\\n{content}"}},"index":0}}]}}\n\n'
+                            else:
+                                yield f'data: {{"choices":[{{"delta":{{"content":"\\n\\n## {title}\\n{content}"}},"index":0}}]}}\n\n'
+                        else:
+                            if title.startswith("Final Answer"):
+                                yield f'data: {{"choices":[{{"delta":{{"content":"### {title}\\n{content.replace("\\n", "<br>")}"}},"index":0}}]}}\n\n'
+                            else:
+                                yield f'data: {{"choices":[{{"delta":{{"content":"<details open>\\n<summary>{title}</summary>\\n{content.replace("\\n", "<br>")}\\n</details>"}},"index":0}}]}}\n\n'
                 if total_thinking_time is not None:
-                    yield f'data: {{"choices":[{{"delta":{{"content":"**Total thinking time: {total_thinking_time:.2f} seconds**"}},"index":0}}]}}\n\n'
+                    yield f'data: {{"choices":[{{"delta":{{"content":"\\n\\n**Total thinking time: {total_thinking_time:.2f} seconds**"}},"index":0}}]}}\n\n'
             
             yield "data: [DONE]\n\n"
         

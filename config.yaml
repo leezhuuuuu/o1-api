@@ -1,4 +1,6 @@
-api_bearer_token: "your_api_bearer_token"
-default_api_url: "https://api.groq.com/openai/v1/chat/completions"
-default_model: "llama-3.1-70b-versatile"
+api_bearer_token: "your_api_bearer_token_here"
+model_provider_api_key: "your_model_provider_api_key_here"
+default_api_url: "https://api.example.com/v1/chat/completions"
+default_model: "example-model-name"
 stream_status_feedback: true
+use_regex_processing: true  # 输出正则处理后的文本
