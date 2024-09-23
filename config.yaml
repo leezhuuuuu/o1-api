@@ -1,0 +1,4 @@
+api_bearer_token: "your_api_bearer_token"
+default_api_url: "https://api.groq.com/openai/v1/chat/completions"
+default_model: "llama-3.1-70b-versatile"
+stream_status_feedback: true
