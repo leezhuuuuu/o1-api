@@ -75,7 +75,6 @@ Send a POST request to the `/v1/chat/completions` endpoint with the following JS
 
 ```json
 {
-    "conversation_id": "unique_conversation_id",
     "messages": [
         {"role": "user", "content": "Your question"}
     ],
@@ -102,7 +101,6 @@ Content-Type: application/json
 
 ```json
 {
-    "conversation_id": "unique_conversation_id",
     "messages": [
         {"role": "user", "content": "What is the capital of France?"}
     ],

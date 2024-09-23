@@ -75,7 +75,6 @@ python app.py
 
 ```json
 {
-    "conversation_id": "unique_conversation_id",
     "messages": [
         {"role": "user", "content": "你的问题"}
     ],
@@ -102,7 +101,6 @@ Content-Type: application/json
 
 ```json
 {
-    "conversation_id": "unique_conversation_id",
     "messages": [
         {"role": "user", "content": "What is the capital of France?"}
     ],
