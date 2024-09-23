@@ -1,4 +1,4 @@
-# O1-API: Efficient AI Conversation API 🚀
+# O1-API: Efficient Simulation of GPT-4-O1 Conversational API 🚀
 
 [English](README_EN.md) | [中文](README.md)
 
@@ -8,7 +8,7 @@
 
 ## Overview 🌟
 
-O1-API is a Flask-based web application that provides an efficient AI conversation API interface. The project's key features include handling continuous dialogues, supporting streaming output, and flexibly adjusting output formats based on configuration. This makes O1-API an ideal tool for AI developers and researchers, especially suitable for scenarios requiring highly customized conversation experiences.
+O1-API is a Flask-based web application that provides an efficient simulation of GPT-4-O1 conversational API. The project features continuous conversation handling, supports streaming output, and allows flexible output format adjustments based on configuration. This makes O1-API an ideal tool for AI developers and researchers, especially in scenarios requiring highly customized conversational experiences.
 
 ## Tech Stack 🛠️
 
@@ -20,14 +20,14 @@ O1-API is a Flask-based web application that provides an efficient AI conversati
 
 ## Features 🌈
 
-- **Continuous Dialogue Support**: Maintains conversation history for context understanding.
+- **Continuous Conversation Support**: Maintains conversation history for context understanding.
 - **Streaming and Non-Streaming Output**: Supports both output modes to meet different needs.
-- **Configurable Output Format**: Easily manage output styles through YAML configuration file.
+- **Configurable Output Format**: Easily manage output styles via YAML configuration files.
 - **Bearer Token Authentication**: Ensures secure API access.
-- **Error Retry Mechanism**: Improves system stability and reliability.
+- **Error Retry Mechanism**: Enhances system stability and reliability.
 - **Flexible Prompt System**: Supports custom system prompts.
 
-## Environment Requirements 🖥️
+## Runtime Environment 🖥️
 
 - Python 3.7+
 
@@ -65,11 +65,11 @@ use_regex_processing: true  # Controls output format
 python app.py
 ```
 
-The service will start on `http://0.0.0.0:18888`.
+The service will start at `http://0.0.0.0:18888`.
 
 ## Usage Guide 📖
 
-### Sending Conversation Requests
+### Send a Conversation Request
 
 Send a POST request to the `/v1/chat/completions` endpoint with the following JSON data:
 
@@ -83,9 +83,9 @@ Send a POST request to the `/v1/chat/completions` endpoint with the following JS
 }
 ```
 
-Ensure to include the correct Bearer Token in the request header.
+Make sure to include the correct Bearer Token in the request header.
 
-## API Endpoint 🌐
+## API Endpoints 🌐
 
 ### `POST /v1/chat/completions`
 
@@ -112,17 +112,17 @@ Content-Type: application/json
 
 #### Response
 
-For non-streaming requests, returns a JSON format response.
-For streaming requests, returns an SSE format data stream.
+For non-streaming requests, returns a JSON formatted response.
+For streaming requests, returns data in SSE format.
 
 ## Error Handling 🚨
 
 - **401 Unauthorized**: Invalid Bearer Token.
-- **500 Internal Server Error**: Server internal error.
+- **500 Internal Server Error**: Internal server error.
 
 ## Configuration Management ⚙️
 
-Flexible configuration through `config.yaml` file:
+Flexible configuration via the `config.yaml` file:
 - API authentication information
 - Model parameters
 - Output format control
@@ -132,7 +132,7 @@ Flexible configuration through `config.yaml` file:
 
 This project is licensed under the Apache 2.0 License. See the [LICENSE](https://github.com/leezhuuuuu/o1-api/blob/main/LICENSE) file for details.
 
-## Contributions 🤝
+## Contributing 🤝
 
 Contributions are welcome! Please submit issues or pull requests.
 
